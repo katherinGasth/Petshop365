@@ -6,7 +6,6 @@ class Categoria(models.Model):
     idCategoria = models.IntegerField(primary_key=True, verbose_name='Id de categoria') 
     nombreCategoria = models.CharField(max_length=50, verbose_name='Nombre de la cotegoria')
     descripcionCategoria = models.CharField(max_length=500, verbose_name='Descripcion categoria')
-    url = models.CharField(max_length=500, verbose_name='URL categoria')
     rutaImagen = models.CharField(max_length=200, verbose_name='Imagen categoria')
 
     def __str__(self):
@@ -44,3 +43,7 @@ class Compra(models.Model):
 
     def __str__(self):
         return self.idCompra
+
+class Carrito(models.Model):
+    username = models.CharField(max_length=50, verbose_name='Username del cliente')
+    productos = models.ManyToManyField(Producto)

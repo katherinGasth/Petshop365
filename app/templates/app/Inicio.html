@@ -19,9 +19,20 @@
                 &#9776;
             </button>
             <div class="collapse navbar-collapse" id="exCollapsingNavbar">
-                <a class="btn btn-outline-primary float-end" href="/formulario">Registrate</a>
-                <a class="btn btn-outline-dark" href="/formulario">Compras</a>
-                <a class="btn btn-outline-dark" href="/formulario">Cerrar sesion</a>
+                {% if user.is_authenticated %}
+                    Hola {{ user.username }}
+                    <a class="btn btn-outline-dark" href="/formulario">Mis Compras</a>
+                    <a class="btn btn-outline-dark" href="/carrito">Carrito</a>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-dark" type="submit">Cerrar sesion</button>
+                    </form>
+                {% else %}
+                    <a class="btn btn-outline-primary float-end" href="/accounts/signup/">Registrate</a>
+                    <a class="btn btn-outline-dark" href="{% url 'login' %}">Inciar sesion</a>
+                {% endif %}
+
+                
             </div>
         </div>
     </nav>
@@ -36,14 +47,14 @@
 
     <div class="centered">
         <div class="row">
-            {% for categoria in categorias%}
+            {% for categoria in categorias %}
                 <div class="col">
                     <div class="card" style="width: 18rem;">
                         <img src="{% static categoria.rutaImagen%}" class="card-img-top" alt="...">
                         <div class="card-body">
                         <h5 class="card-title">{{categoria.nombreCategoria}}</h5>
                         <p class="card-text">{{categoria.descripcionCategoria}}</p>
-                        <a href="{{categoria.url}}" class="btn btn-primary">Ver</a>
+                        <a href="/productos/{{categoria.idCategoria}}" class="btn btn-primary">Ver</a>
                         </div>
                     </div>
                 </div>

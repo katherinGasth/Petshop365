@@ -1,13 +1,11 @@
 from django.urls import path
-from .views import inicio, accesorios, alimentos, cuidadoSalud, juguetes, snacks, vestimenta, formulario
+from .views import inicio, productos, SignUpView, carrito, add_carrito, del_carrito
 
 urlpatterns = [
     path('', inicio, name='inicio'),
-    path('accesorios', accesorios, name='accesorios'),
-    path('alimentos', alimentos, name='alimentos'),
-    path('formulario', formulario, name='formulario'),
-    path('cuidadoSalud', cuidadoSalud, name='cuidadoSalud'),
-    path('juguetes', juguetes, name='juguetes'),
-    path('snacks', snacks, name='snacks'),
-    path('vestimenta', vestimenta, name='vestimenta'),
+    path('carrito', carrito, name="carrito"),
+    path('carrito/add', add_carrito, name="add_carrito"),
+    path('carrito/delete', del_carrito, name="del_carrito"),
+    path('accounts/signup/', SignUpView.as_view(), name="signup"),
+    path('productos/<int:id>', productos, name="productos")
 ]
