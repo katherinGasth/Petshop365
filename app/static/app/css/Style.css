@@ -1,0 +1,47 @@
+
+body {
+    font-family: 'Lato', sans-serif;
+    color: #333;
+    margin: 30px;
+    padding: 0;
+    text-align: center;
+    color: #b52d2d;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+h1{
+    font-family: 'Raleway', sans-serif;
+    color: #c12727;
+    text-align: center;
+    font-size: 290%;
+    margin-top: 120px;
+}
+
+h2 {
+    font-family: 'Raleway', sans-serif;
+    color: #c11b1b;
+    text-align: center;
+    font-size: 200%;
+    margin-top: 30px;
+}
+
+.centered .card {
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+    margin-bottom: 10px; /* Added */
+    margin-top: 50px;
+}
+
+.centered {
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+img{
+    width: 30%;
+
+}
