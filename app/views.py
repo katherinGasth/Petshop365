@@ -4,7 +4,6 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import Categoria, Producto, Carrito
 
-# Create your views here.
 
 class SignUpView(CreateView):
     form_class = UserCreationForm
@@ -12,7 +11,7 @@ class SignUpView(CreateView):
     template_name = "registration/signup.html"
 
 def inicio(request):
-    categorias = Categoria.objects.all() # Llamado a la base de datos
+    categorias = Categoria.objects.all()
     return render(request, 'app/Inicio.html', { 'categorias': categorias })
 
 def productos(request, id):
