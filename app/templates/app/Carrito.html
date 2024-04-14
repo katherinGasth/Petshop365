@@ -9,22 +9,24 @@
     <link type="text/css" rel="stylesheet" href="{% static 'app/css/Style.css'%}"/>
 </head>
 <body>
-    <h1>Carrito</h1>
+    <h1>CARRITO</h1>
     
     <div class="centered">
         <div class="row">
             {% for producto in productos %}
                 <div class="col">
-                    <div class="card" style="width: 12rem;">
-                        <img src="{% static producto.rutaImagen %}" class="card-img-top" alt="...">
-                        <div class="card-body">
+                    <div class="card" style="width: 10rem; height: 30rem;">
+                        <img src="{% static producto.rutaImagen %}" class="card-img-top" alt="..." style="height: 14rem">
+                        <div class="card-body" style="height: 12rem; position: relative;">
                         <h5 class="card-title">{{producto.nombreProducto}}</h5>
-                        <p class="card-text">---</p>
-                        <p class="card-text">precio = ${{producto.precioProducto}}</p>
+                        <p class="card-text">____________</p>
+                        <p class="card-text">Precio = ${{producto.precioProducto}}</p>
                         <form action="/carrito/delete" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="id" value="{{producto.idProducto}}"/>
-                            <button class="btn btn-danger" type="submit">Eliminar</button>
+                            <button class="btn btn-danger" type="submit" 
+                            style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);"
+                            >Eliminar</button>
                         </form>                     
                         </div>
                     </div>
