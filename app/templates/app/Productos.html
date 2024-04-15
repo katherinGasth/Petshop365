@@ -9,6 +9,40 @@
     <link type="text/css" rel="stylesheet" href="{% static 'app/css/Style.css'%}"/>
 </head>
 <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" role="navigation">
+        <div class="container">
+            <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+                &#9776;
+            </button>
+            <div class="collapse navbar-collapse me-3" id="exCollapsingNavbar">
+                {% if user.is_authenticated %}
+                    <span class="me-3">Hola {{ user.username|title }}</span>
+                    <a class="btn btn-outline-dark me-3" href="/carrito">Carrito</a>
+                    <a class="btn btn-outline-dark me-3" href="/update">Perfil</a>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-dark me-2" type="submit">Cerrar sesion</button>
+                    </form>
+                {% else %}
+                    <a class="btn btn-outline-primary float-end me-2" href="/accounts/signup/">Registrate</a>
+                    <a class="btn btn-outline-dark me-2" href="{% url 'login' %}">Iniciar sesion</a>
+                {% endif %}
+
+                
+            </div>
+        </div>
+    </nav>
+
+    {% if messages %}
+    <div style="display: flex; margin: 60px;">
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
     <h1>PRODUCTOS</h1>
     <p>Tenemos super ofertas todos los días.</p>
     
@@ -20,15 +54,16 @@
                         <img src="{% static producto.rutaImagen %}" class="card-img-top" alt="..." style="height: 14rem;">
                         <div class="card-body; position: relative;">
                         <h5 class="card-title">{{producto.nombreProducto}}</h5>
-                        <p class="card-text">____________</p>
+                        <p class="card-text">{{producto.stock_producto}}</p>
                         <p class="card-text">Precio = ${{producto.precioProducto}}</p>
                         {% if user.is_authenticated %}
                             {% if producto.stock_producto > 0 %}
-                                <form action="/carrito/add" method="post">
+                                <form action="/carrito/add" method="post" >
                                     {% csrf_token %}
                                     <input type="hidden" name="id" value="{{producto.idProducto}}"/>
-                                    <button class="btn btn-primary" type="submit" 
-                                    style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);">Agregar</button>
+                                    <p>Cantidad:</p>
+                                    <input type="number"class="cantidad" name="cantidad" value="1"/>
+                                    <button class="btn btn-primary" type="submit">Agregar</button>
                                 </form>
                             {% else %}
                                 <p>No hay stock disponible</p>

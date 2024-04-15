@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic import UpdateView
-from .models import Categoria, Producto, Carrito
+from .models import Categoria, Producto, Carrito, ItemCarrito
 from django.views.generic import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -54,26 +54,42 @@ def carrito(request):
     carrito, created = Carrito.objects.get_or_create(defaults= {'username': request.user }, username=request.user)
     carrito.save()
 
-    return render(request, 'app/Carrito.html', { 'productos': carrito.productos.all() })
+    return render(request, 'app/Carrito.html', { 'items': carrito.items.all() })
 
 def add_carrito(request):
     if request.method == "POST":
         idProducto = request.POST.get("id")
-
+        cantidad = request.POST.get("cantidad")
+        
         carrito, created = Carrito.objects.get_or_create(defaults= {'username': request.user, 'productos': [] }, username=request.user)
         producto = Producto.objects.get(idProducto=idProducto)
 
-        carrito.productos.add(producto)
+        itemCarrito = ItemCarrito.objects.create(cantidad = cantidad, producto=producto)
+
+        carrito.items.add(itemCarrito)
         carrito.save()
-    return redirect(to="/carrito")
+        messages.success(request, producto.nombreProducto + " agregado al carrito.")
+
+    return redirect(to=request.META.get('HTTP_REFERER'))
 
 def del_carrito(request):
     if request.method == "POST":
-        idProducto = request.POST.get("id")
+        idItem = request.POST.get("id")
 
-        carrito, created = Carrito.objects.get_or_create(defaults= {'username': request.user, 'productos': [] }, username=request.user)
-        carrito.productos.remove(carrito.productos.get(idProducto=idProducto))
+        carrito, created = Carrito.objects.get_or_create(defaults= {'username': request.user, 'items': [] }, username=request.user)
+        carrito.items.remove(carrito.items.get(id=idItem))
         carrito.save()
+    return redirect(to="/carrito")
+
+def update_carrito(request):
+    if request.method == "POST":
+        idItem = request.POST.get("id")
+        cantidad = request.POST.get("cantidad")
+
+        itemCarrito = ItemCarrito.objects.get(id=idItem)
+        itemCarrito.cantidad = cantidad
+        
+        itemCarrito.save()
     return redirect(to="/carrito")
 
 def perfil(request):
