@@ -47,3 +47,4 @@ class Compra(models.Model):
 class Carrito(models.Model):
     username = models.CharField(max_length=50, verbose_name='Username del cliente')
     productos = models.ManyToManyField(Producto)
+
