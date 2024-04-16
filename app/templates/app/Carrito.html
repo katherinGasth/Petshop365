@@ -13,17 +13,25 @@
     
     <div class="centered">
         <div class="row">
-            {% for producto in productos %}
+            {% for item in items %}
                 <div class="col">
-                    <div class="card" style="width: 10rem; height: 30rem;">
-                        <img src="{% static producto.rutaImagen %}" class="card-img-top" alt="..." style="height: 14rem">
+                    <div class="card" style="width: 12rem; height: 32rem;">
+                        <img src="{% static item.producto.rutaImagen %}" class="card-img-top" alt="..." style="height: 14rem">
                         <div class="card-body" style="height: 12rem; position: relative;">
-                        <h5 class="card-title">{{producto.nombreProducto}}</h5>
-                        <p class="card-text">____________</p>
-                        <p class="card-text">Precio = ${{producto.precioProducto}}</p>
+                        <h5 class="card-title">{{item.producto.nombreProducto}}</h5>
+                        <p class="card-text">Cantidad: 
+                            <form action="/carrito/update" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{item.id}}"/>
+                                <input type="number" class="cantidad" name="cantidad" value="{{item.cantidad}}"/>
+                                <button class="btn btn-primary" type="submit">Guardar</button>
+                            </form>
+                        </p>
+                        <p class="card-text" >Precio = ${{item.producto.precioProducto}} </p>
+
                         <form action="/carrito/delete" method="post">
                             {% csrf_token %}
-                            <input type="hidden" name="id" value="{{producto.idProducto}}"/>
+                            <input type="hidden" name="id" value="{{item.id}}"/>
                             <button class="btn btn-danger" type="submit" 
                             style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);"
                             >Eliminar</button>
