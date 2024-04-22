@@ -19,8 +19,8 @@
                         <img src="{% static producto.rutaImagen %}" class="card-img-top" alt="...">
                         <div class="card-body">
                         <h5 class="card-title">{{producto.nombreProducto}}</h5>
-                        <p class="card-text">---</p>
-                        <p class="card-text">precio = ${{producto.precioProducto}}</p>
+                        <p class="card-text">____________</p>
+                        <p class="card-text">Precio = ${{producto.precioProducto}}</p>
                         <form action="/carrito/delete" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="id" value="{{producto.idProducto}}"/>
