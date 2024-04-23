@@ -1,15 +1,19 @@
 from django.shortcuts import render
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
+
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from app.models import Producto
 from .serializers import ProductoSerializer
 
 @csrf_exempt
 @api_view(['GET', 'POST'])
+@permission_classes((IsAuthenticated,))
 def lista_Productos(request):
     if request.method == 'GET':
         Producto = Producto.objects.all()
@@ -29,7 +33,8 @@ def lista_Productos(request):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @csrf_exempt
-@api_view(['GET', 'PUT', 'PATCH', 'DELETE'])   
+@api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
+@permission_classes((IsAuthenticated,))   
 def vista_producto(request, id):
     try:
         producto = Producto.objects.get(id=id)
