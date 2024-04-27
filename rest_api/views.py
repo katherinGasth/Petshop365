@@ -7,6 +7,8 @@ from rest_framework.parsers import JSONParser
 
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import serializers
+from rest_framework.views import APIView
 
 from app.models import Producto
 from .serializers import ProductoSerializer
@@ -35,7 +37,7 @@ def lista_Productos(request):
 @csrf_exempt
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 @permission_classes((IsAuthenticated,))   
-def vista_producto(request, id):
+def vista_Producto(request, id):
     try:
         producto = Producto.objects.get(id=id)
     except Producto.DoesNotExist:
