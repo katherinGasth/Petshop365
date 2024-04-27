@@ -3,6 +3,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import Categoria, Producto, Carrito
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
 
 # Create your views here.
 
@@ -43,7 +49,7 @@ def del_carrito(request):
         carrito.save()
     return redirect(to="/carrito")
 
-def password_reset_request(request):
+def recuperar(request):
     if request.method == "POST":
         email = request.POST['email']
         user = User.objects.filter(email=email).first()
@@ -52,6 +58,19 @@ def password_reset_request(request):
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             return redirect('password_reset_confirm', uidb64=uid, token=token)
+        else:
+            messages.error(request, 'No se encontró ninguna cuenta asociada a este correo electrónico.')
+    return render(request, 'recuperar.html')
+
+def password_reset_request(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        user = User.objects.filter(email=email).first()
+        if user:
+            # Generar un token único para el usuario y redirigirlo a la página de restablecimiento de contraseña
+            token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            return redirect('password_reset_confirm.html', uidb64=uid, token=token)
         else:
             messages.error(request, 'No se encontró ninguna cuenta asociada a este correo electrónico.')
     return render(request, 'password_reset_request.html')
@@ -75,5 +94,4 @@ def password_reset_confirm(request, uidb64, token):
     else:
         messages.error(request, 'El enlace de restablecimiento de contraseña es inválido o ha caducado.')
         return redirect('login')
-
 
