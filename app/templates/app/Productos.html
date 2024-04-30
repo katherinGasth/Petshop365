@@ -54,7 +54,9 @@
                         <img src="{% static producto.rutaImagen %}" class="card-img-top" alt="..." style="height: 14rem;">
                         <div class="card-body; position: relative;">
                         <h5 class="card-title">{{producto.nombreProducto}}</h5>
+
                         <p class="card-text">{{producto.stock_producto}}</p>
+
                         <p class="card-text">Precio = ${{producto.precioProducto}}</p>
                         {% if user.is_authenticated %}
                             {% if producto.stock_producto > 0 %}

@@ -43,6 +43,7 @@
             </button>
             <div class="collapse navbar-collapse me-3" id="exCollapsingNavbar">
                 {% if user.is_authenticated %}
+
                     <span class="me-3">Hola {{ user.username|title }}</span>
                     <a class="btn btn-outline-dark me-3" href="/carrito">Carrito</a>
                     <a class="btn btn-outline-dark me-3" href="/update">Perfil</a>
@@ -51,17 +52,21 @@
                         <button class="btn btn-outline-dark me-2" type="submit">Cerrar sesion</button>
                     </form>
                 {% else %}
+
                     <a class="btn btn-outline-primary float-end me-2" href="/accounts/signup/">Registrate</a>
                     <a class="btn btn-outline-dark me-2" href="{% url 'login' %}">Iniciar sesion</a>
-                {% endif %}
 
+                {% endif %}
+   
                 
             </div>
         </div>
     </nav>
     
 
-    <h1>BIENVENIDO A "PETSHOP-365"</h1>
+
+    <h1>BIENVENIDO A "PETSHOP 365"</h1>
+
     <p class="centered"> Somos una tienda online de venta de productos para mascotas.</p>
     <br>
     <h2>CATEGORIAS</h2>
