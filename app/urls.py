@@ -11,5 +11,5 @@ urlpatterns = [
     path('accounts/signup/', SignUpView.as_view(), name="signup"),
     path('productos/<int:id>', productos, name="productos"), 
     path('recuperar/', recuperar, name='recuperar'),
-    path('recuperar/', views.recuperar, name='recuperar'),
+    path('registration/recuperar/', views.recuperar, name='recuperar'),
 ]
